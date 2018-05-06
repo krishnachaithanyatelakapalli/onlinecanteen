@@ -2,7 +2,8 @@ var mongoose    = require("mongoose"),
 	Items  		= require("./models/item"),
 	Comment	    = require("./models/comment"),
 	Checkout 	= require("./models/checkout"),
-	Order 		= require("./models/order");
+	Order 		= require("./models/order"),
+	User      = require("./models/user");
 
 var items = [
 	{
@@ -42,10 +43,26 @@ var items = [
 	}
 ]
 
-var user1 = {
-	name: "Krishna",
-	email: "bob.marley@gmail.com"
-}
+var users = [
+	{
+		username: "Tomas",
+		password: "traintracks",
+		email: "tomas@example.com",
+		type: "Customer"
+	},
+	{
+		username: "Harry",
+		password: "voldemort",
+		email: "Harry@example.com",
+		type: "Customer"
+	},
+	{
+		username: "Gordon Ramsay",
+		password: "delicious",
+		email: "gordon@example.com",
+		type: "Manager"
+	}
+];
 
 var order_list = [
 	{
@@ -62,32 +79,33 @@ var order_list = [
 	}
 ]
 
-// var ids = [59bddbb9cbd67a124a24256b
-// 59bddbb9cbd67a124a242568
-// 59bddbb9cbd67a124a242569
-// 59bddbb9cbd67a124a24256a
-// 59bddbb9cbd67a124a24256c]
-
-function seedDB() {	
+function seedDB() {
+	User.remove({}, function(err) {
+		if (err) {
+			console.log(err);
+		} else {
+			users.forEach(function(user) {
+				User.create(user, function(err, user) {
+					console.log("User created");
+				});
+			});
+		}
+	});
 	Items.remove({}, function(err){
 		if(err){
-			// Address this error
 			console.log(err);
 		} else {
 			Checkout.remove({}, function(err){
 				if(err){
-					//Handle this error
 					console.log(err);
 				} else {
-					Checkout.create(user1, function(err, checkout){
+					Checkout.create(users[2], function(err, checkout){
 						if(err){
-							//Handle this error
 							console.log(err);
-						} else {					
+						} else {
 							items.forEach(function(item){
 								Items.create(item, function(err, foodItems){
 									if(err){
-										//Handle this error
 										console.log(err);
 									} else {
 										console.log("foodItems created");
@@ -108,74 +126,24 @@ function seedDB() {
 														foodItems.save();
 														console.log("Comment creadted");
 														// console.log(foodItems.comments);
-														// console.log(checkout.list);												
+														// console.log(checkout.list);
 													}
 												});
 											}
-										});										
+										});
 									}
-								});			
-							});					
+								});
+							});
 							Order.remove({}, function(err){
-								if(err){
-									//Handle this error
+								if(err)
 									console.log(err);
-								} else {
-								// 	order_list.forEach(function(curr_order){
-								// 		Order.create(curr_order, function(err, order){
-								// 			if(err){
-								// 				//Handle this error
-								// 				console.log(err);
-								// 			} else {
-								// 				// console.log(order);
-								// 				Items.find({name: curr_order.name}, function(err, item){
-								// 					if(err){
-								// 						//Handle this error
-								// 						console.log(err);
-								// 					} else {	
-								// 						// var count = 0;
-								// 						// curr_order.price = item[0].price;
-								// 						// curr_order.total_price = curr_order.quantity * curr_order.price;
-								// 						// // console.log(curr_order);
-								// 						// order.price = curr_order.price;
-								// 						// order.total_price = curr_order.total_price;										
-								// 						// // console.log(order);
-								// 						// order.save(function(err){
-								// 						// 	if(err){
-								// 						// 		//Handle this error
-								// 						// 		console.log(err);
-								// 						// 	} else {
-								// 						// 		console.log(order);
-								// 						// 		checkout.orders.push(order);
-								// 						// 		var total = 0;
-								// 						// 		checkout.orders.forEach(function(indl_order){
-								// 						// 			total += (indl_order.price * indl_order.quantity);
-								// 						// 		});
-								// 						// 		checkout.total = total;
-								// 						// 		checkout.save(function(err){
-								// 						// 			if(err){
-								// 						// 				//Handle this error
-								// 						// 				console.log(err);
-								// 						// 			} else {
-								// 						// 				console.log(checkout);
-
-								// 						// 			}
-								// 						// 		});
-								// 						// 	}
-								// 						// });														
-								// 					}
-								// 				});
-								// 			}										
-								// 		});												
-								// 	});									
-								}
-							});							
-						}						
-					});			
+							});
+						}
+					});
 				}
-			});			
+			});
 		}
-	});	
+	});
 };
 
 module.exports = seedDB;

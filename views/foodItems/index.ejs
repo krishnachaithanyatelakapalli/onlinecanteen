@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include('../partials/header', {user: user}) %>
 <div class="row" id="outer_row">
 	<div class="col-lg-10 col-md-6 col-sm-2" id="menu">
 		<div id="items" class="container">
@@ -10,7 +10,9 @@
 					<% items.forEach(function(item){ %>
 						<% if(item.category === category){ %>
 							<div class="col-md-4 col-sm-4" id="view">
-								<a class="pull-right" href="/Items/<%= item._id %>/edit">edit</a>
+								<% if (user.type === "Manager") { %>
+									<a class="pull-right" href="/Items/<%= item._id %>/edit">edit</a>
+								<% } %>
 								<div class="thumbnail">
 									<img src="<%= item.image %>">
 								</div>

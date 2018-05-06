@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include('../partials/header', {user: user}) %>
 	<div class="container">
 		<form class="new-form" action="/Items/new" method="POST">
 			<div class="form-group">

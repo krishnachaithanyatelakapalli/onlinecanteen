@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>	
+	<head>
 		<title>Canteen</title>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,9 +17,16 @@
 						<li id="menu-btn"><a href="/Items">Menu</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Sign Up</a></li>
-						<li><a href="#">Login</a></li>
+						<% if (!user) { %>
+							<li><a href="/login">Login</a></li>
+						<% } else { %>
+							<li><%= user.username %></li>
+							<% if (user.type === "Manager") { %>
+								<li><a href="/Items/new">Add New</a></li>
+							<% } %>
+							<li><a href="/logout">Logout</a></li>
+						<% } %>
 					</ul>
 				</div>
-			</div>			
+			</div>
 		</nav>
