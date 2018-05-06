@@ -18,7 +18,7 @@ To deploy the server and start the project
 $ npm start
 ```
 
-Open a web browser and navigate to [http://localhost:8008/](http://127.0.0.1:8080/).
+Open a web browser and navigate to [http://localhost:8080/](http://127.0.0.1:8080/).
 
 To login as a customer, use credentials
 username 'Tomas' and password 'traintracks'
